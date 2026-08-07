@@ -1,0 +1,71 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+import { site } from "../../data/site";
+import { withBase } from "../../lib/url";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { titulo, resumo, data, capa, autor } = post.data;
+
+const dataFormatada = new Intl.DateTimeFormat("pt-BR", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+}).format(data);
+---
+
+<Layout title={titulo} description={resumo} image={capa}>
+  <article>
+    <section class="relative flex min-h-[52vh] items-end overflow-hidden bg-charcoal px-6 pb-16 pt-40 lg:px-10 lg:pb-20">
+      <img src={withBase(capa)} alt={titulo} class="absolute inset-0 h-full w-full object-cover opacity-40" />
+      <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/70 to-charcoal/30"></div>
+      <div class="relative mx-auto w-full max-w-3xl">
+        <a href={withBase("/blog")} class="mb-8 inline-flex w-fit items-center gap-2 text-[0.65rem] uppercase tracking-[0.2em] text-cream/50 transition-colors hover:text-gold-light">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          Voltar para o blog
+        </a>
+        <time class="block text-[0.7rem] uppercase tracking-[0.3em] text-gold">{dataFormatada}</time>
+        <h1 class="font-display text-balance mt-5 text-4xl leading-[1.12] text-cream sm:text-5xl">{titulo}</h1>
+        <p class="mt-4 text-xs uppercase tracking-[0.15em] text-cream/50">{autor}</p>
+      </div>
+    </section>
+
+    <section class="bg-cream px-6 py-20 lg:px-10 lg:py-28">
+      <div class="prose-post mx-auto max-w-2xl text-base font-light leading-relaxed text-lead">
+        <Content />
+      </div>
+
+      <div class="mx-auto mt-16 max-w-2xl border-t border-charcoal/10 pt-12">
+        <p class="font-display text-2xl text-charcoal">Ficou com alguma dúvida?</p>
+        <div class="mt-6">
+          <Button href={site.whatsapp} target="_blank" tone="dark" variant="solid">Chamar no WhatsApp</Button>
+        </div>
+      </div>
+    </section>
+  </article>
+</Layout>
+
+<style>
+  .prose-post :global(p) {
+    margin-bottom: 1.3em;
+  }
+  .prose-post :global(h2) {
+    margin-top: 2em;
+    margin-bottom: 0.6em;
+    font-size: 1.5rem;
+    color: var(--color-charcoal);
+  }
+  .prose-post :global(em) {
+    color: var(--color-lead-soft);
+  }
+</style>

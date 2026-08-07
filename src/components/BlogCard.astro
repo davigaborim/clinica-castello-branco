@@ -1,0 +1,35 @@
+---
+import { withBase } from "../lib/url";
+
+interface Props {
+  slug: string;
+  titulo: string;
+  resumo: string;
+  capa: string;
+  data: Date;
+  index?: number;
+}
+
+const { slug, titulo, resumo, capa, data, index = 0 } = Astro.props;
+
+const dataFormatada = new Intl.DateTimeFormat("pt-BR", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+}).format(data);
+---
+
+<a href={withBase(`/blog/${slug}`)} class="group block" data-reveal data-reveal-delay={index * 100}>
+  <div class="overflow-hidden rounded-2xl">
+    <img
+      src={withBase(capa)}
+      alt={titulo}
+      class="aspect-[4/3] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+    />
+  </div>
+  <div class="mt-5">
+    <time class="text-[0.65rem] uppercase tracking-[0.2em] text-gold">{dataFormatada}</time>
+    <h3 class="mt-2 font-display text-xl leading-snug text-charcoal">{titulo}</h3>
+    <p class="mt-2 text-sm font-light leading-relaxed text-lead-soft line-clamp-2">{resumo}</p>
+  </div>
+</a>

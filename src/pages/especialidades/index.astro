@@ -1,0 +1,51 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import Button from "../../components/Button.astro";
+import { especialidades, site } from "../../data/site";
+---
+
+<Layout
+  title="Especialidades"
+  description="Conheça as especialidades odontológicas e médicas da Clínica Castello Branco em Campo Grande."
+>
+  <PageHero
+    eyebrow="O que tratamos"
+    title="Especialidades."
+    description="Da clínica geral aos procedimentos mais avançados, tudo sob o mesmo teto e o mesmo padrão de cuidado."
+  />
+
+  <section class="bg-cream px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid gap-px overflow-hidden rounded-2xl bg-charcoal/10 sm:grid-cols-2 lg:grid-cols-3">
+        {especialidades.map((esp, i) => {
+          const isLast = i === especialidades.length - 1;
+          const remainder = especialidades.length % 3;
+          const spanLast = isLast && remainder === 1 ? "sm:col-span-2 lg:col-span-3" : isLast && remainder === 2 ? "lg:col-span-1" : "";
+          return (
+          <div class={`group flex flex-col justify-between bg-cream p-9 transition-colors duration-500 hover:bg-charcoal ${spanLast}`} data-reveal data-reveal-delay={i * 60}>
+            <div>
+              <span class="font-display text-3xl text-gold-dim transition-colors duration-500 group-hover:text-gold-light">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h2 class="font-display mt-6 text-2xl text-charcoal transition-colors duration-500 group-hover:text-cream">
+                {esp.titulo}
+              </h2>
+              <p class="mt-3 text-sm font-light leading-relaxed text-lead-soft transition-colors duration-500 group-hover:text-cream/70">
+                {esp.descricao}
+              </p>
+            </div>
+          </div>
+          );
+        })}
+      </div>
+
+      <div class="mt-16 flex flex-col items-start gap-6 border-t border-charcoal/10 pt-14 sm:flex-row sm:items-center sm:justify-between" data-reveal>
+        <p class="max-w-md font-display text-2xl leading-snug text-charcoal">
+          Não encontrou o que procura? Fale com a gente pelo WhatsApp.
+        </p>
+        <Button href={site.whatsapp} target="_blank" tone="dark" variant="solid">Chamar no WhatsApp</Button>
+      </div>
+    </div>
+  </section>
+</Layout>

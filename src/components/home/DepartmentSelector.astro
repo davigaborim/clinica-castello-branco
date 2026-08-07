@@ -1,0 +1,81 @@
+---
+import SectionHeading from "../SectionHeading.astro";
+import { withBase } from "../../lib/url";
+
+const departamentos = [
+  {
+    nome: "Odontologia",
+    tagline: "Da clínica geral aos procedimentos estéticos mais avançados.",
+    href: "/odontologia",
+    tipo: "foto" as const,
+    imagem: "/images/interior-consultorio.jpg",
+  },
+  {
+    nome: "Obstetra",
+    tagline: "Ginecologia e obstetrícia, sob os cuidados da nossa sócia-fundadora.",
+    href: "/parto",
+    tipo: "marca" as const,
+  },
+];
+---
+
+<section class="bg-charcoal px-6 py-28 lg:px-10 lg:py-36">
+  <div class="mx-auto max-w-7xl">
+    <SectionHeading
+      eyebrow="Dois cuidados, um só padrão"
+      title="Escolha o que você procura."
+      tone="light"
+      align="left"
+    />
+
+    <div class="mt-16 grid gap-8 lg:grid-cols-2">
+      {departamentos.map((dep, i) => (
+        <a
+          href={withBase(dep.href)}
+          class="department-card group relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-2xl p-10 lg:min-h-[480px] lg:p-12"
+          data-reveal
+          data-reveal-delay={i * 150}
+        >
+          {dep.tipo === "foto" ? (
+            <>
+              <img
+                src={withBase(dep.imagem)}
+                alt={dep.nome}
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-charcoal/10"></div>
+            </>
+          ) : (
+            <>
+              <div class="absolute inset-0 bg-charcoal-soft"></div>
+              <img
+                src={withBase("/images/marca-montanha.png")}
+                alt=""
+                aria-hidden="true"
+                class="pointer-events-none absolute -right-10 -top-10 h-64 w-64 opacity-[0.08] transition-transform duration-700 ease-out group-hover:scale-110"
+              />
+            </>
+          )}
+
+          <div class="relative">
+            <span class="text-[0.65rem] uppercase tracking-[0.3em] text-gold">Departamento</span>
+            <h3 class="font-display mt-3 text-4xl text-cream lg:text-5xl">{dep.nome}</h3>
+            <p class="mt-4 max-w-sm text-sm font-light leading-relaxed text-cream/70">{dep.tagline}</p>
+            <span class="mt-8 inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.2em] text-cream transition-colors duration-300 group-hover:text-gold-light">
+              Explorar
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="transition-transform duration-500 ease-out group-hover:translate-x-1">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .department-card {
+    border: 1px solid color-mix(in srgb, var(--color-cream) 10%, transparent);
+  }
+</style>

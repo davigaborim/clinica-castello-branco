@@ -1,0 +1,45 @@
+---
+import { site } from "../../data/site";
+import mapPin from "lucide-static/icons/map-pin.svg?raw";
+import clock from "lucide-static/icons/clock.svg?raw";
+import Button from "../Button.astro";
+
+const items = [
+  {
+    icon: mapPin,
+    label: "Endereço",
+    value: `${site.endereco.linha1}, ${site.endereco.linha2} — ${site.endereco.cidade}`,
+  },
+  {
+    icon: clock,
+    label: "Horários",
+    value: site.horarios.map((h) => `${h.dias}: ${h.horas}`).join(" · "),
+  },
+];
+---
+
+<section class="border-y border-charcoal/10 bg-cream-dim px-6 py-10 lg:px-10">
+  <div class="mx-auto flex max-w-7xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
+    <div class="grid gap-8 sm:grid-cols-2 lg:flex lg:gap-14">
+      {items.map((item) => (
+        <div class="info-item flex items-start gap-4">
+          <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-charcoal text-gold-light" set:html={item.icon} />
+          <div>
+            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-lead-soft">{item.label}</p>
+            <p class="mt-1 max-w-xs text-sm font-normal leading-relaxed text-charcoal">{item.value}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <Button href={site.whatsapp} target="_blank" tone="dark" variant="outline" class="shrink-0">
+      Agendar Consulta
+    </Button>
+  </div>
+</section>
+
+<style>
+  .info-item :global(svg) {
+    width: 15px;
+    height: 15px;
+  }
+</style>

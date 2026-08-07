@@ -1,0 +1,48 @@
+---
+import Button from "../Button.astro";
+import { withBase } from "../../lib/url";
+
+const whatsapp = "https://wa.me/5567984673592";
+---
+
+<section class="relative flex h-[100svh] min-h-[640px] w-full items-end overflow-hidden bg-charcoal">
+  <img
+    src={withBase("/images/hero-fachada.jpg")}
+    alt="Fachada da Clínica Castello Branco ao entardecer"
+    class="absolute inset-0 h-full w-full object-cover"
+    fetchpriority="high"
+  />
+  <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/55 to-charcoal/20"></div>
+  <div class="absolute inset-0 bg-charcoal/10"></div>
+
+  <div class="relative mx-auto w-full max-w-7xl px-6 pb-24 pt-40 lg:px-10 lg:pb-28">
+    <span class="mb-6 block text-[0.7rem] uppercase tracking-[0.35em] text-gold" data-reveal>
+      Clínica Castello Branco · Campo Grande
+    </span>
+    <h1
+      class="font-display text-balance max-w-3xl text-5xl leading-[1.08] text-cream sm:text-6xl lg:text-7xl"
+      data-reveal
+      data-reveal-delay="120"
+    >
+      Presença, precisão<br /> e cuidado.
+    </h1>
+    <p
+      class="mt-7 max-w-lg text-base font-light leading-relaxed text-cream/75 sm:text-lg"
+      data-reveal
+      data-reveal-delay="240"
+    >
+      Centro médico e odontológico de alto padrão — tecnologia de ponta e um atendimento que acolhe do
+      primeiro contato ao último detalhe.
+    </p>
+    <div class="mt-10 flex flex-wrap items-center gap-6" data-reveal data-reveal-delay="360">
+      <Button href={whatsapp} target="_blank" tone="light" variant="solid">Agendar Consulta</Button>
+      <a href="#sobre" class="text-[0.7rem] uppercase tracking-[0.2em] text-cream/70 transition-colors hover:text-gold-light">
+        Conheça a clínica
+      </a>
+    </div>
+  </div>
+
+  <div class="pointer-events-none absolute bottom-8 left-1/2 hidden -translate-x-1/2 lg:block">
+    <span class="block h-12 w-px animate-pulse bg-cream/40"></span>
+  </div>
+</section>

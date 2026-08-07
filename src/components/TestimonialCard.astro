@@ -1,0 +1,30 @@
+---
+import quoteIcon from "lucide-static/icons/quote.svg?raw";
+
+interface Props {
+  texto: string;
+  nome: string;
+  index?: number;
+}
+
+const { texto, nome, index = 0 } = Astro.props;
+---
+
+<figure
+  class="testimonial-card flex h-full flex-col justify-between rounded-2xl border border-cream/10 bg-charcoal-soft p-8 lg:p-10"
+  data-reveal
+  data-reveal-delay={index * 120}
+>
+  <span class="mb-6 block h-6 w-6 text-gold" set:html={quoteIcon} />
+  <blockquote class="font-display text-lg font-normal leading-relaxed text-cream/90">
+    “{texto}”
+  </blockquote>
+  <figcaption class="mt-8 text-[0.7rem] uppercase tracking-[0.2em] text-cream/50">{nome}</figcaption>
+</figure>
+
+<style>
+  .testimonial-card :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+</style>

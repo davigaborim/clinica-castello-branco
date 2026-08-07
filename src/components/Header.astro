@@ -1,0 +1,130 @@
+---
+import { withBase } from "../lib/url";
+
+const navLinks = [
+  { label: "Início", href: "/" },
+  { label: "Odontologia", href: "/odontologia" },
+  { label: "Obstetra", href: "/parto" },
+  { label: "Convênios", href: "/convenios" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contato", href: "/#contato" },
+];
+
+const whatsapp = "https://wa.me/5567984673592";
+---
+
+<header data-site-header class="site-header fixed inset-x-0 top-0 z-50">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
+    <a href={withBase("/")} class="relative flex h-9 items-center">
+      <img src={withBase("/images/logo-lockup-light.png")} alt="Clínica Castello Branco" class="logo-light h-full w-auto transition-opacity duration-500" />
+      <img src={withBase("/images/logo-lockup-dark.png")} alt="Clínica Castello Branco" class="logo-dark absolute inset-0 h-full w-auto opacity-0 transition-opacity duration-500" />
+    </a>
+
+    <nav class="hidden items-center gap-9 lg:flex">
+      {navLinks.map((link) => (
+        <a href={withBase(link.href)} class="header-link text-[0.72rem] uppercase tracking-[0.18em] transition-colors duration-300">
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden lg:block">
+      <a
+        href={whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="header-cta inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-[0.7rem] uppercase tracking-[0.18em] transition-all duration-300"
+      >
+        Agendar Consulta
+      </a>
+    </div>
+
+    <button
+      data-menu-toggle
+      aria-label="Abrir menu"
+      aria-expanded="false"
+      class="header-link flex h-10 w-10 items-center justify-center lg:hidden"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+    </button>
+  </div>
+
+  <div data-menu-panel class="hidden border-t border-charcoal/10 bg-cream px-6 py-6 lg:hidden">
+    <nav class="flex flex-col gap-5">
+      {navLinks.map((link) => (
+        <a href={withBase(link.href)} class="text-sm uppercase tracking-[0.18em] text-charcoal">
+          {link.label}
+        </a>
+      ))}
+      <a
+        href={whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-charcoal px-6 py-3 text-[0.7rem] uppercase tracking-[0.18em] text-cream"
+      >
+        Agendar Consulta
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background-color: transparent;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    transition: background-color 0.5s ease, backdrop-filter 0.5s ease, box-shadow 0.5s ease;
+  }
+
+  .header-link {
+    color: var(--color-cream);
+  }
+
+  .header-cta {
+    background-color: var(--color-cream);
+    color: var(--color-charcoal);
+  }
+
+  .header-cta:hover {
+    background-color: var(--color-gold);
+  }
+
+  .header-link:hover {
+    color: var(--color-gold-light);
+  }
+
+  .site-header.is-scrolled {
+    background-color: color-mix(in srgb, var(--color-cream) 92%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 0 color-mix(in srgb, var(--color-charcoal) 8%, transparent);
+  }
+
+  .site-header.is-scrolled .header-link {
+    color: var(--color-charcoal);
+  }
+
+  .site-header.is-scrolled .logo-light {
+    opacity: 0;
+  }
+
+  .site-header.is-scrolled .logo-dark {
+    opacity: 1;
+  }
+
+  .site-header.is-scrolled .header-link:hover {
+    color: var(--color-gold-dim);
+  }
+
+  .site-header.is-scrolled .header-cta {
+    background-color: var(--color-charcoal);
+    color: var(--color-cream);
+  }
+
+  .site-header.is-scrolled .header-cta:hover {
+    background-color: var(--color-gold);
+    color: var(--color-charcoal);
+  }
+</style>

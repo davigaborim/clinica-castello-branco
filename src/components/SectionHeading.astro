@@ -1,0 +1,37 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  tone?: "dark" | "light";
+  align?: "left" | "center";
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  tone = "dark",
+  align = "left",
+  class: className = "",
+} = Astro.props;
+
+const titleColor = tone === "dark" ? "text-charcoal" : "text-cream";
+const descColor = tone === "dark" ? "text-lead-soft" : "text-cream/70";
+const alignClass = align === "center" ? "text-center items-center mx-auto" : "text-left items-start";
+---
+
+<div class={`flex flex-col ${alignClass} ${className}`} data-reveal>
+  {eyebrow && (
+    <span class="mb-4 text-[0.7rem] uppercase tracking-[0.3em] text-gold">{eyebrow}</span>
+  )}
+  <h2 class={`font-display text-balance text-4xl sm:text-5xl lg:text-6xl leading-[1.1] ${titleColor}`}>
+    {title}
+  </h2>
+  {description && (
+    <p class={`mt-6 max-w-xl text-base sm:text-lg font-light leading-relaxed ${descColor}`}>
+      {description}
+    </p>
+  )}
+</div>

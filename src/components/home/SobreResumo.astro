@@ -1,0 +1,42 @@
+---
+import SectionHeading from "../SectionHeading.astro";
+import Button from "../Button.astro";
+import { withBase } from "../../lib/url";
+---
+
+<section id="sobre" class="bg-cream px-6 py-28 lg:px-10 lg:py-36">
+  <div class="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2 lg:gap-24">
+    <div class="order-2 lg:order-1">
+      <SectionHeading
+        eyebrow="Sobre a clínica"
+        title="Uma clínica pensada como uma casa."
+        description="A Clínica Castello Branco nasceu do trabalho de uma única dentista e cresceu para reunir uma equipe
+        de especialistas sob o mesmo padrão de cuidado. O símbolo da montanha na nossa fachada representa
+        exatamente isso: solidez, direção e um ponto mais alto a alcançar — juntos, a cada paciente."
+      />
+      <div class="mt-9" data-reveal data-reveal-delay="150">
+        <Button href="/equipe" tone="dark" variant="outline">Conheça a equipe</Button>
+      </div>
+    </div>
+
+    <div class="order-1 grid grid-cols-2 gap-4 lg:order-2" data-reveal>
+      <img
+        src={withBase("/images/interior-lounge.jpg")}
+        alt="Recepção da Clínica Castello Branco"
+        class="h-full w-full rounded-2xl object-cover"
+      />
+      <div class="flex flex-col gap-4">
+        <img
+          src={withBase("/images/fachada-placa.jpg")}
+          alt="Fachada e identidade visual da Clínica Castello Branco"
+          class="h-full w-full rounded-2xl object-cover"
+        />
+        <img
+          src={withBase("/images/interior-consultorio.jpg")}
+          alt="Consultório odontológico equipado"
+          class="h-full w-full rounded-2xl object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</section>

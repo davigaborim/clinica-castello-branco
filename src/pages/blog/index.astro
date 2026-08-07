@@ -1,0 +1,35 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import BlogCard from "../../components/BlogCard.astro";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.data.valueOf() - a.data.data.valueOf()
+);
+---
+
+<Layout title="Blog" description="Notícias e cuidados com a saúde bucal, direto da Clínica Castello Branco.">
+  <PageHero
+    eyebrow="Blog"
+    title="Notícias e cuidados."
+    description="Conteúdo sobre saúde bucal, tratamentos e o dia a dia da clínica."
+  />
+
+  <section class="bg-cream px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+        {posts.map((post, i) => (
+          <BlogCard
+            slug={post.id}
+            titulo={post.data.titulo}
+            resumo={post.data.resumo}
+            capa={post.data.capa}
+            data={post.data.data}
+            index={i}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,74 @@
+---
+import { getCollection } from "astro:content";
+import SectionHeading from "../SectionHeading.astro";
+import TeamCard from "../TeamCard.astro";
+
+const equipe = (await getCollection("equipe")).filter((e) => e.data.area === "odontologia");
+const fundadoras = equipe
+  .filter((e) => e.data.tier === "fundadora")
+  .sort((a, b) => a.data.ordem - b.data.ordem);
+const corpoClinico = equipe
+  .filter((e) => e.data.tier === "corpo-clinico")
+  .sort((a, b) => a.data.ordem - b.data.ordem);
+---
+
+<section class="bg-cream px-6 py-28 lg:px-10 lg:py-36">
+  <div class="mx-auto max-w-7xl">
+    <SectionHeading
+      eyebrow="Quem cuida do seu sorriso"
+      title="Equipe odontológica"
+      description="Fundadora e especialistas parceiros, todos sob o mesmo padrão de cuidado."
+      align="left"
+    />
+
+    <div class="mt-14 grid gap-10 sm:grid-cols-2 lg:gap-14">
+      {fundadoras.map((membro) => (
+        <TeamCard
+          slug={membro.id}
+          nome={membro.data.nome}
+          cargo={membro.data.cargo}
+          especialidade={membro.data.especialidade}
+          foto={membro.data.foto}
+          resumo={membro.data.resumo}
+          size="lg"
+        />
+      ))}
+    </div>
+
+    <div class="mt-24 flex items-end justify-between" data-reveal>
+      <div>
+        <span class="mb-4 block text-[0.7rem] uppercase tracking-[0.3em] text-gold">Corpo Clínico</span>
+        <h3 class="font-display text-3xl text-charcoal sm:text-4xl">Especialistas parceiros</h3>
+      </div>
+      <div class="hidden items-center gap-3 sm:flex">
+        <button data-carousel-prev aria-label="Anterior" class="flex h-10 w-10 items-center justify-center rounded-full border border-charcoal/20 text-charcoal transition-colors hover:border-gold hover:text-gold-dim">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <button data-carousel-next aria-label="Próximo" class="flex h-10 w-10 items-center justify-center rounded-full border border-charcoal/20 text-charcoal transition-colors hover:border-gold hover:text-gold-dim">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div data-carousel class="mt-10">
+      <div
+        data-carousel-track
+        class="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {corpoClinico.map((membro) => (
+          <div data-carousel-item class="w-[75%] shrink-0 snap-start sm:w-[42%] lg:w-[27%]">
+            <TeamCard
+              slug={membro.id}
+              nome={membro.data.nome}
+              cargo={membro.data.cargo}
+              especialidade={membro.data.especialidade}
+              foto={membro.data.foto}
+              resumo={membro.data.resumo}
+              size="md"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

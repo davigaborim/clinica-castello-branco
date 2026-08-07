@@ -1,0 +1,54 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import DepartmentHero from "../../components/DepartmentHero.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import EquipeOdonto from "../../components/odontologia/EquipeOdonto.astro";
+import EspecialidadesTeaser from "../../components/odontologia/EspecialidadesTeaser.astro";
+import DepoimentosPreview from "../../components/home/DepoimentosPreview.astro";
+import BlogPreview from "../../components/home/BlogPreview.astro";
+import Button from "../../components/Button.astro";
+import { site } from "../../data/site";
+---
+
+<Layout
+  title="Odontologia"
+  description="Odontologia de alto padrão na Clínica Castello Branco: clínica geral, estética, ortodontia, implantes e mais, em Campo Grande."
+>
+  <DepartmentHero
+    eyebrow="Departamento · Odontologia"
+    title="Cuidado odontológico, do jeito que deveria ser."
+    description="Da rotina de prevenção aos procedimentos estéticos mais avançados, uma equipe dedicada a cuidar do seu sorriso com precisão e acolhimento."
+    image="/images/hero-fachada.jpg"
+  />
+
+  <section class="bg-cream px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-3xl">
+      <SectionHeading
+        eyebrow="Sobre o departamento"
+        title="Odontologia sem pressa, sem sala de espera lotada."
+        description="A ala odontológica da Clínica Castello Branco reúne clínica geral, estética e especialidades como ortodontia e implantodontia — cada tratamento pensado para o seu caso, nunca em série."
+        align="left"
+      />
+    </div>
+  </section>
+
+  <EquipeOdonto />
+  <EspecialidadesTeaser />
+  <DepoimentosPreview />
+  <BlogPreview />
+
+  <section class="bg-charcoal px-6 py-24 lg:px-10 lg:py-28">
+    <div class="mx-auto flex max-w-7xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
+      <div data-reveal>
+        <span class="mb-4 block text-[0.7rem] uppercase tracking-[0.3em] text-gold">Convênios</span>
+        <p class="font-display max-w-md text-2xl leading-snug text-cream sm:text-3xl">
+          Trabalhamos com os principais convênios da região.
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center gap-4" data-reveal data-reveal-delay="150">
+        <Button href="/convenios" tone="light" variant="outline">Ver convênios</Button>
+        <Button href={site.whatsapp} target="_blank" tone="light" variant="solid">Agendar Consulta</Button>
+      </div>
+    </div>
+  </section>
+</Layout>

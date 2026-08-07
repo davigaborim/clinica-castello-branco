@@ -1,0 +1,83 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+import { site } from "../../data/site";
+import { withBase } from "../../lib/url";
+
+export async function getStaticPaths() {
+  const equipe = await getCollection("equipe");
+  return equipe.map((membro) => ({
+    params: { slug: membro.id },
+    props: { membro },
+  }));
+}
+
+const { membro } = Astro.props;
+const { Content } = await render(membro);
+const { nome, cargo, especialidade, registro, foto, procedimentos, tier } = membro.data;
+
+const whatsappMsg = encodeURIComponent(
+  `Olá! Gostaria de agendar uma consulta com ${nome} na Clínica Castello Branco.`
+);
+const whatsappHref = `${site.whatsapp}?text=${whatsappMsg}`;
+---
+
+<Layout title={nome} description={`${nome} — ${especialidade} na Clínica Castello Branco.`} image={foto}>
+  <section class="bg-charcoal pt-32 lg:pt-40">
+    <div class="mx-auto grid max-w-7xl gap-12 px-6 pb-20 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20 lg:px-10 lg:pb-28">
+      <div data-reveal>
+        <div class="overflow-hidden rounded-2xl">
+          <img src={withBase(foto)} alt={nome} class="aspect-[4/5] w-full object-cover" />
+        </div>
+      </div>
+
+      <div class="flex flex-col justify-center">
+        <a href={withBase("/equipe")} class="mb-8 inline-flex w-fit items-center gap-2 text-[0.65rem] uppercase tracking-[0.2em] text-cream/50 transition-colors hover:text-gold-light">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          Voltar para a equipe
+        </a>
+        <span class="text-[0.7rem] uppercase tracking-[0.3em] text-gold">
+          {especialidade} {tier === "fundadora" && "· Sócia-Fundadora"}
+        </span>
+        <h1 class="font-display text-balance mt-5 text-5xl leading-[1.08] text-cream sm:text-6xl">{nome}</h1>
+        <p class="mt-4 text-sm font-light uppercase tracking-[0.15em] text-cream/50">{cargo} · {registro}</p>
+
+        <div class="prose-bio mt-8 max-w-xl text-base font-light leading-relaxed text-cream/75">
+          <Content />
+        </div>
+
+        {procedimentos?.length > 0 && (
+          <div class="mt-10">
+            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-cream/40">Procedimentos</p>
+            <ul class="mt-4 flex flex-wrap gap-2.5">
+              {procedimentos.map((proc: string) => (
+                <li class="rounded-full border border-cream/15 px-4 py-2 text-xs font-light text-cream/80">
+                  {proc}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div class="mt-11">
+          <Button href={whatsappHref} target="_blank" tone="light" variant="solid">
+            Agendar com {nome.replace(/^Dra?\.\s*/, "")}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .prose-bio :global(p) {
+    margin-bottom: 1em;
+  }
+  .prose-bio :global(blockquote) {
+    border-left: 2px solid var(--color-gold);
+    padding-left: 1rem;
+    font-style: italic;
+    opacity: 0.7;
+  }
+</style>

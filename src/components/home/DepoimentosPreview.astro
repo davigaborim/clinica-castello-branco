@@ -1,0 +1,23 @@
+---
+import SectionHeading from "../SectionHeading.astro";
+import TestimonialCard from "../TestimonialCard.astro";
+import { depoimentos } from "../../data/site";
+
+const destaque = depoimentos.slice(0, 3);
+---
+
+<section class="bg-charcoal px-6 py-28 lg:px-10 lg:py-36">
+  <div class="mx-auto max-w-7xl">
+    <SectionHeading
+      eyebrow="Quem já passou por aqui"
+      title="Confiança, dita por quem sentiu."
+      tone="light"
+    />
+
+    <div class="mt-16 grid gap-6 lg:grid-cols-3">
+      {destaque.map((d, i) => (
+        <TestimonialCard texto={d.texto} nome={d.nome} index={i} />
+      ))}
+    </div>
+  </div>
+</section>

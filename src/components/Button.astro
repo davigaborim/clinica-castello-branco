@@ -1,0 +1,40 @@
+---
+import { withBase } from "../lib/url";
+
+interface Props {
+  href: string;
+  variant?: "solid" | "outline";
+  tone?: "dark" | "light";
+  class?: string;
+  target?: string;
+}
+
+const {
+  href,
+  variant = "solid",
+  tone = "dark",
+  class: className = "",
+  target,
+} = Astro.props;
+
+const resolvedHref = href.startsWith("/") ? withBase(href) : href;
+
+const base =
+  "group inline-flex items-center gap-3 px-8 py-3.5 text-[0.7rem] uppercase tracking-[0.2em] transition-all duration-500 ease-out rounded-full";
+
+const styles: Record<string, string> = {
+  "solid-dark": "bg-charcoal text-cream hover:bg-gold hover:text-charcoal",
+  "solid-light": "bg-cream text-charcoal hover:bg-gold hover:text-charcoal",
+  "outline-dark": "border border-charcoal/25 text-charcoal hover:border-gold hover:text-gold-dim",
+  "outline-light": "border border-cream/30 text-cream hover:border-gold hover:text-gold-light",
+};
+
+const styleKey = `${variant}-${tone}`;
+---
+
+<a href={resolvedHref} target={target} rel={target === "_blank" ? "noopener noreferrer" : undefined} class={`${base} ${styles[styleKey]} ${className}`}>
+  <span><slot /></span>
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="transition-transform duration-500 ease-out group-hover:translate-x-1">
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </svg>
+</a>

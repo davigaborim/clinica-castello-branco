@@ -1,0 +1,24 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  description?: string;
+}
+
+const { eyebrow, title, description } = Astro.props;
+---
+
+<section class="relative flex min-h-[46vh] items-end overflow-hidden bg-charcoal px-6 pb-16 pt-40 lg:px-10 lg:pb-20">
+  <div class="pointer-events-none absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(circle at 20% 20%, var(--color-gold) 0, transparent 45%);"></div>
+  <div class="relative mx-auto w-full max-w-7xl">
+    <span class="mb-5 block text-[0.7rem] uppercase tracking-[0.3em] text-gold">{eyebrow}</span>
+    <h1 class="font-display text-balance max-w-3xl text-5xl leading-[1.08] text-cream sm:text-6xl">
+      {title}
+    </h1>
+    {description && (
+      <p class="mt-6 max-w-xl text-base font-light leading-relaxed text-cream/70 sm:text-lg">
+        {description}
+      </p>
+    )}
+  </div>
+</section>

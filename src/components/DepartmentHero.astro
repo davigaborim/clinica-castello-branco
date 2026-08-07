@@ -1,0 +1,56 @@
+---
+import Button from "./Button.astro";
+import { withBase } from "../lib/url";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  image?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  image,
+  ctaLabel = "Agendar Consulta",
+  ctaHref = "https://wa.me/5567984673592",
+} = Astro.props;
+---
+
+<section class="relative flex min-h-[82vh] w-full items-end overflow-hidden bg-charcoal">
+  {image ? (
+    <>
+      <img src={withBase(image)} alt="" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" />
+      <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-charcoal/20"></div>
+    </>
+  ) : (
+    <>
+      <div class="absolute inset-0 bg-charcoal-soft"></div>
+      <img
+        src={withBase("/images/marca-montanha.png")}
+        alt=""
+        aria-hidden="true"
+        class="pointer-events-none absolute right-[-8%] top-1/2 h-[130%] w-auto -translate-y-1/2 opacity-[0.06]"
+      />
+    </>
+  )}
+
+  <div class="relative mx-auto w-full max-w-7xl px-6 pb-20 pt-40 lg:px-10 lg:pb-28">
+    <span class="mb-6 block text-[0.7rem] uppercase tracking-[0.35em] text-gold" data-reveal>
+      {eyebrow}
+    </span>
+    <h1 class="font-display text-balance max-w-2xl text-5xl leading-[1.08] text-cream sm:text-6xl" data-reveal data-reveal-delay="120">
+      {title}
+    </h1>
+    <p class="mt-7 max-w-lg text-base font-light leading-relaxed text-cream/75 sm:text-lg" data-reveal data-reveal-delay="240">
+      {description}
+    </p>
+    <div class="mt-10" data-reveal data-reveal-delay="360">
+      <Button href={ctaHref} target="_blank" tone="light" variant="solid">{ctaLabel}</Button>
+    </div>
+  </div>
+</section>

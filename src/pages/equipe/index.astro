@@ -1,0 +1,64 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import TeamCard from "../../components/TeamCard.astro";
+
+const equipe = await getCollection("equipe");
+const fundadoras = equipe
+  .filter((e) => e.data.tier === "fundadora")
+  .sort((a, b) => a.data.ordem - b.data.ordem);
+const corpoClinico = equipe
+  .filter((e) => e.data.tier === "corpo-clinico")
+  .sort((a, b) => a.data.ordem - b.data.ordem);
+---
+
+<Layout
+  title="Equipe"
+  description="Conheça as fundadoras e o corpo clínico da Clínica Castello Branco, em Campo Grande."
+>
+  <PageHero
+    eyebrow="Nossa equipe"
+    title="Profissionais dedicados ao seu cuidado."
+    description="Da fundação à rotina de cada consultório, um único padrão de excelência."
+  />
+
+  <section class="bg-cream px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading eyebrow="À frente da clínica" title="Fundadoras" align="left" />
+      <div class="mt-14 grid gap-10 sm:grid-cols-2 lg:gap-14">
+        {fundadoras.map((membro) => (
+          <TeamCard
+            slug={membro.id}
+            nome={membro.data.nome}
+            cargo={membro.data.cargo}
+            especialidade={membro.data.especialidade}
+            foto={membro.data.foto}
+            resumo={membro.data.resumo}
+            size="lg"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-cream-dim px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading eyebrow="No dia a dia" title="Corpo Clínico" align="left" />
+      <div class="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        {corpoClinico.map((membro) => (
+          <TeamCard
+            slug={membro.id}
+            nome={membro.data.nome}
+            cargo={membro.data.cargo}
+            especialidade={membro.data.especialidade}
+            foto={membro.data.foto}
+            resumo={membro.data.resumo}
+            size="md"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

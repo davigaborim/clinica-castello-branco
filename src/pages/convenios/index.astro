@@ -1,0 +1,49 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import Button from "../../components/Button.astro";
+import { convenios } from "../../data/convenios";
+import { site } from "../../data/site";
+import { withBase } from "../../lib/url";
+---
+
+<Layout
+  title="Convênios"
+  description="Confira os convênios aceitos pela Clínica Castello Branco em Campo Grande."
+>
+  <PageHero
+    eyebrow="Facilita pra você"
+    title="Convênios."
+    description="Trabalhamos com os convênios abaixo. Não encontrou o seu? Fale com a gente — muitas vezes há uma condição especial."
+  />
+
+  <section class="bg-cream px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-5xl">
+      <div class="rounded-2xl border border-gold/25 bg-cream-dim px-6 py-4 text-center text-sm font-light text-lead-soft" data-reveal>
+        Lista em confirmação com a clínica — pode haver convênios adicionais não listados aqui ainda.
+      </div>
+
+      <div class="mt-14 grid gap-6 sm:grid-cols-2">
+        {convenios.map((c, i) => (
+          <div
+            class="flex items-center gap-6 rounded-2xl border border-charcoal/10 bg-white/60 p-6"
+            data-reveal
+            data-reveal-delay={i * 80}
+          >
+            <span class="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-white p-2">
+              <img src={withBase(c.logo)} alt={c.nome} class="h-full w-full object-contain" />
+            </span>
+            <span class="font-display text-xl text-charcoal">{c.nome}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-16 flex flex-col items-start gap-6 border-t border-charcoal/10 pt-14 sm:flex-row sm:items-center sm:justify-between" data-reveal>
+        <p class="max-w-md font-display text-2xl leading-snug text-charcoal">
+          Não é conveniado ou tem dúvidas sobre cobertura?
+        </p>
+        <Button href={site.whatsapp} target="_blank" tone="dark" variant="solid">Chamar no WhatsApp</Button>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,87 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import DepartmentHero from "../../components/DepartmentHero.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import Button from "../../components/Button.astro";
+import { site, servicosObstetricia } from "../../data/site";
+import { withBase } from "../../lib/url";
+
+const equipe = await getCollection("equipe");
+const socia = equipe.find((e) => e.data.area === "parto");
+
+const whatsappMsg = encodeURIComponent("Olá! Gostaria de saber mais sobre ginecologia e obstetrícia na Clínica Castello Branco.");
+const whatsappHref = `${site.whatsapp}?text=${whatsappMsg}`;
+---
+
+<Layout
+  title="Obstetra"
+  description="Ginecologia e obstetrícia na Clínica Castello Branco, em Campo Grande — sob os cuidados da nossa sócia-fundadora."
+>
+  <DepartmentHero
+    eyebrow="Departamento · Obstetra"
+    title="Cuidado ginecológico e obstétrico, do jeito certo."
+    description="Da rotina ginecológica ao acompanhamento de pré-natal — um cuidado atento, sob a mesma filosofia de atendimento humanizado que guia toda a clínica."
+    ctaLabel="Falar com a equipe"
+    ctaHref={whatsappHref}
+  />
+
+  <section class="bg-cream px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-3xl">
+      <SectionHeading
+        eyebrow="Sobre o departamento"
+        title="Ginecologia e obstetrícia, com proximidade."
+        description="Esta ala da clínica reúne o acompanhamento ginecológico de rotina e o cuidado obstétrico completo — do pré-natal à contracepção — com o mesmo padrão de atenção e cuidado da odontologia."
+        align="left"
+      />
+    </div>
+  </section>
+
+  {socia && (
+    <section class="bg-cream-dim px-6 py-24 lg:px-10 lg:py-32">
+      <div class="mx-auto grid max-w-5xl gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+        <div class="overflow-hidden rounded-2xl" data-reveal>
+          <img src={withBase(socia.data.foto)} alt={socia.data.nome} class="aspect-[4/5] w-full object-cover" />
+        </div>
+        <div data-reveal data-reveal-delay="150">
+          <span class="text-[0.7rem] uppercase tracking-[0.3em] text-gold">Sócia-Fundadora</span>
+          <h2 class="font-display mt-4 text-4xl text-charcoal">{socia.data.nome}</h2>
+          <p class="mt-2 text-sm font-light uppercase tracking-[0.15em] text-lead-soft">{socia.data.especialidade}</p>
+          <p class="mt-6 max-w-lg text-base font-light leading-relaxed text-lead-soft">{socia.data.resumo}</p>
+          <div class="mt-8">
+            <Button href={`/equipe/${socia.id}`} tone="dark" variant="outline">Ver perfil completo</Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="bg-cream px-6 py-24 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading eyebrow="O que oferecemos" title="Serviços." align="left" />
+
+      <div class="mt-14 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        {servicosObstetricia.map((s, i) => (
+          <div class="border-t border-charcoal/10 pt-6" data-reveal data-reveal-delay={i * 60}>
+            <span class="font-display text-2xl text-gold-dim">{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="font-display mt-4 text-lg text-charcoal">{s.titulo}</h3>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-charcoal px-6 py-20 lg:px-10 lg:py-24">
+    <div class="mx-auto max-w-7xl text-center" data-reveal>
+      <p class="font-display text-2xl text-cream sm:text-3xl">
+        Alguma dúvida sobre o acompanhamento?
+      </p>
+      <p class="mx-auto mt-4 max-w-xl text-sm font-light leading-relaxed text-cream/60">
+        Fale direto pelo WhatsApp e a equipe te orienta.
+      </p>
+      <div class="mt-8 flex justify-center">
+        <Button href={whatsappHref} target="_blank" tone="light" variant="solid">Chamar no WhatsApp</Button>
+      </div>
+    </div>
+  </section>
+</Layout>
