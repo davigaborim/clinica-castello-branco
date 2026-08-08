@@ -2,14 +2,10 @@
 import Button from "../Button.astro";
 import SectionHeading from "../SectionHeading.astro";
 import { site } from "../../data/site";
-import mapPin from "lucide-static/icons/map-pin.svg?raw";
-import clock from "lucide-static/icons/clock.svg?raw";
 import phoneIcon from "lucide-static/icons/phone.svg?raw";
 import mailIcon from "lucide-static/icons/mail.svg?raw";
 
 const items = [
-  { icon: mapPin, label: "Endereço", value: `${site.endereco.linha1}, ${site.endereco.linha2}, ${site.endereco.cidade}` },
-  { icon: clock, label: "Horários", value: site.horarios.map((h) => `${h.dias}: ${h.horas}`).join(" · ") },
   { icon: phoneIcon, label: "Telefone / WhatsApp", value: `${site.telefone} · ${site.whatsappNumero}` },
   { icon: mailIcon, label: "E-mail", value: site.email },
 ];
@@ -19,8 +15,8 @@ const items = [
   <div class="mx-auto max-w-7xl">
     <SectionHeading
       eyebrow="Contato"
-      title="Vamos cuidar do seu sorriso."
-      description="Marque uma avaliação e conheça a estrutura da clínica de perto — o primeiro passo é só chamar no WhatsApp."
+      title="Vamos cuidar de você."
+      description="Odontologia ou obstetrícia — o primeiro passo é o mesmo: chamar no WhatsApp e marcar seu horário."
       tone="light"
     />
 
